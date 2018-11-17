@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2086b072-8ffd-4097-aab3-8cb643a912d0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/data/session/c/1/c12f26af3948766f88b1ea1286576e78" beforeDir="false" />
-    </list>
+    <list default="true" id="2086b072-8ffd-4097-aab3-8cb643a912d0" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,15 +53,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="issue15920.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../golang.org/x/tools/go/gcimporter15/testdata/issue15920.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="unknow.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/syserror/unknow.go">
           <provider selected="true" editor-type-id="text-editor">
@@ -82,7 +71,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="error.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="error.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/error.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="131">
@@ -91,13 +80,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="builtin.go" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/Cellar/go/1.11.2/libexec/src/builtin/builtin.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="254" column="5" selection-start-line="254" selection-start-column="5" selection-end-line="254" selection-end-column="5" />
-            </state>
-          </provider>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="lastupdate.tmp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lastupdate.tmp">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="base.go" pinned="false" current-in-tab="false">
@@ -317,9 +307,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/index.tpl">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/conf/app.conf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -582,6 +569,15 @@
           <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.tpl">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lastupdate.tmp">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

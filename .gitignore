@@ -12,6 +12,6 @@
 *.out
 
 
-
-joeblog
-.DS_Store
+./.idea
+./joeblog
+./.DS_Store
