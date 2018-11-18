@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/yinrenxin/joeblog/models"
 	"github.com/yinrenxin/joeblog/syserror"
-	"fmt"
+	"github.com/astaxie/beego/logs"
 )
 
 type UserController struct {
@@ -21,14 +21,27 @@ func (this *UserController) Login() {
 		this.Abort500(syserror.New("登录失败",err))
 	}
 
-	this.SetSession(SESSION_USER_KEY,id)
-
-	this.Data["json"] = map[string]interface{}{
-		"code": 0,
-		"action": "/",
+	user, _ := models.QueryUserById(id)
+	logs.Info("用户信息",user)
+	if err != nil {
+		logs.Warn(err)
 	}
 
-	fmt.Println("主键id： ", id)
-	this.ServeJSON()
+	this.SetSession(SESSION_USER_KEY,user)
 
+	this.JsonOK("登录成功","/")
+
+	logs.Info("登录成功 用户id：", user)
+
+
+}
+
+// @router /logout [get]
+func (this *UserController) Logout() {
+	this.MustLogin()
+	if !this.IsLogin {
+		this.Abort500(syserror.NoUserError{})
+	}
+	this.DelSession(SESSION_USER_KEY)
+	this.Redirect("/", 302)
 }

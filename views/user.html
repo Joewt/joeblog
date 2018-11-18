@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>闲言轻博客</title>
+	<title>登录</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{{template "common/link.html"}}
 </head>
@@ -12,6 +12,16 @@
 			<div class="container">
 					<div class="contar-wrap">
 						<div class = "item">
+                            {{if .islogin}}
+                                <div class="layui-card">
+                                    <div class="layui-card-header">个人信息</div>
+                                    <div class="layui-card-body">
+                                        名称: {{.User.Name}} <br>
+                                        邮箱: {{.User.Email}} <br>
+                                        <a href="/logout" class="layui-btn">退出</a>
+                                    </div>
+                                </div>
+                                    {{else}}
 							<div class="item-box layer-photos-demol layer-photos-demo">
                                 <form class="layui-form" action="" lay-filter="example">
                                     <div class="layui-form-item">
@@ -34,7 +44,8 @@
                                     </div>
 								</form>
 							</div>
-						</div>
+						    {{end}}
+                            </div>
 					</div>
 			</div>
 		</div>

@@ -22,7 +22,7 @@
             </ul>
             <a href="/user" class="personal pull-left">
                 <i class="layui-icon layui-icon-username"></i>
-                <span style="color:#fff">JOE</span>
+                {{if .islogin}}<span style="color:#fff">{{.User.Name}}</span>{{end}}
             </a>
         </div>
         <div class="mobile-nav pull-right" id="mobile-nav">
