@@ -14,16 +14,35 @@
                 </div>
             </div>
         </form>
+
         <div class="blog-nav pull-right">
-            <ul class="layui-nav pull-left">
-                <li class="layui-nav-item {{if equrl .Path "/"}}layui-this{{end}}"><a href="/">首页</a></li>
-                <li class="layui-nav-item {{if equrl .Path "/message"}}layui-this{{end}}"><a href="/message">留言</a></li>
-                <li class="layui-nav-item {{if equrl .Path "/about"}}layui-this{{end}}"><a href="/about">关于</a></li>
-            </ul>
-            <a href="/user" class="personal pull-left">
-                <i class="layui-icon layui-icon-username"></i>
+        <ul class="layui-nav layui-bg-blue">
+
+
+
+            <li class="layui-nav-item {{if equrl .Path "/"}}layui-this{{end}}"><a href="/">首页</a></li>
+            <li class="layui-nav-item {{if equrl .Path "/message"}}layui-this{{end}}"><a href="/message">留言</a></li>
+            <li class="layui-nav-item {{if equrl .Path "/about"}}layui-this{{end}}"><a href="/about">关于</a></li>
+
+
+            <li class="layui-nav-item">
+
+                <a href="javascript:;"><i class="layui-icon layui-icon-username"></i>
                 {{if .islogin}}<span style="color:#fff">{{.User.Name}}</span>{{end}}
-            </a>
+                </a>
+
+
+                <dl class="layui-nav-child">
+                    {{if .islogin}}
+                    <dd><a href="/user">个人资料</a></dd>
+                    <dd><a href="/logout">退出</a></dd>
+                    {{else}}
+                    <dd><a href="/user">登录</a></dd>
+                    {{end}}
+                </dl>
+
+            </li>
+        </ul>
         </div>
         <div class="mobile-nav pull-right" id="mobile-nav">
             <a href="javascript:;">
