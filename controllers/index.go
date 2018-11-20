@@ -31,3 +31,8 @@ func (this *IndexController) IndexComment() {
 func (this *IndexController) IndexUser() {
 	this.TplName = "user.html"
 }
+
+// @router /reg [get]
+func (this *IndexController) IndexReg() {
+	this.TplName = "reg.html"
+}

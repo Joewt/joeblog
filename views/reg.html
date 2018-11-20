@@ -13,7 +13,7 @@
 					<div class="contar-wrap">
 						<div class = "item">
                             {{if .islogin}}
-
+                                <script>window.location.href="/"</script>>
                                     {{else}}
 							<div class="item-box layer-photos-demol layer-photos-demo">
                                 <form class="layui-form" action="" lay-filter="example">
@@ -24,15 +24,26 @@
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
+                                        <label class="layui-form-label">用户名</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
                                         <label class="layui-form-label">密码</label>
                                         <div class="layui-input-inline">
                                             <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
+                                        <label class="layui-form-label">确认密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="password1" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="login">登录</button>
-                                            <button class="layui-btn" lay-submit="">xxxx</button>
+                                            <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="reg">注册</button>
                                         </div>
                                     </div>
 								</form>
@@ -48,17 +59,17 @@
     layui.use(['form','jquery'], function() {
         var form  = layui.form;
         $=layui.jquery;
-        form.on('submit(login)', function(rdata){
-            $.post("/login",rdata.field, function(data){
+        form.on('submit(reg)', function(rdata){
+            $.post("/reg",rdata.field, function(data){
                 if(data.code == 0){
-                    layer.msg("登录成功");
+                    layer.msg("注册成功");
                     if(data.action){
                         setTimeout(function() {
                             window.location.href = data.action;
                         }, 300)
                     }
                 }else{
-                    layer.msg("登录失败"+data.msg)
+                    layer.msg("注册失败-"+data.msg)
                 }
             }, "json").error(function() {
                 layer.msg("网络异常")

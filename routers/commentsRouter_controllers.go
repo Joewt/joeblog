@@ -45,6 +45,15 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"],
         beego.ControllerComments{
+            Method: "IndexReg",
+            Router: `/reg`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"],
+        beego.ControllerComments{
             Method: "IndexUser",
             Router: `/user`,
             AllowHTTPMethods: []string{"get"},
@@ -66,6 +75,15 @@ func init() {
             Method: "Logout",
             Router: `/logout`,
             AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:UserController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "Reg",
+            Router: `/reg`,
+            AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})

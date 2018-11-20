@@ -51,3 +51,29 @@ func QueryUserById(id uint) (user User, err error){
 	}
 	return user, nil
 }
+
+
+func FindUserByEmail(email string) bool {
+	user := User{Email: email}
+	err := DB.Read(&user, "Email")
+	if err != nil {
+		return true
+	}
+	return false
+}
+
+
+func SaveUser(username,email, pwd string) (uint, error) {
+	user := new(User)
+	user.Name = username
+	user.Pwd = common.MD5(pwd)
+	user.Email = email
+	user.Avatar = "/static/images/item.png"
+	user.Role = 1
+	id, err := DB.Insert(user)
+	if err != nil {
+		return uint(id), err
+	}
+	logs.Info("新注册一个用户: ", id)
+	return uint(id), nil
+}

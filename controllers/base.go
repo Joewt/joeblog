@@ -4,7 +4,6 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/yinrenxin/joeblog/models"
 	"errors"
-	"github.com/astaxie/beego/logs"
 	"github.com/yinrenxin/joeblog/syserror"
 )
 
@@ -20,7 +19,7 @@ type BaseController struct {
 func (this *BaseController) Prepare() {
 	this.Data["Path"] = this.Ctx.Request.RequestURI
 	u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
-	logs.Info("是否登录",u.Name,ok,this.Ctx.Request.RequestURI)
+	//logs.Info("是否登录",u.Name,ok,this.Ctx.Request.RequestURI)
 	this.IsLogin = false
 	if ok {
 		this.User = u
