@@ -7,6 +7,15 @@ import (
 
 func init() {
 
+    beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:ArticleController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:ArticleController"],
+        beego.ControllerComments{
+            Method: "Create",
+            Router: `/create`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"],
         beego.ControllerComments{
             Method: "Index",
@@ -29,6 +38,15 @@ func init() {
         beego.ControllerComments{
             Method: "IndexComment",
             Router: `/comment`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:IndexController"],
+        beego.ControllerComments{
+            Method: "IndexCreate",
+            Router: `/create`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,

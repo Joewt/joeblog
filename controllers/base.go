@@ -5,6 +5,7 @@ import (
 	"github.com/yinrenxin/joeblog/models"
 	"errors"
 	"github.com/yinrenxin/joeblog/syserror"
+	"github.com/astaxie/beego/logs"
 )
 
 const SESSION_USER_KEY = "SESSION_USER_KEY"
@@ -14,25 +15,36 @@ type BaseController struct {
 	beego.Controller
 	User models.User
 	IsLogin bool
+	IsAdmin bool
 }
 
 func (this *BaseController) Prepare() {
 	this.Data["Path"] = this.Ctx.Request.RequestURI
 	u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
-	//logs.Info("是否登录",u.Name,ok,this.Ctx.Request.RequestURI)
+	logs.Info("是否登录",u)
 	this.IsLogin = false
+	this.IsAdmin = false
 	if ok {
 		this.User = u
 		this.IsLogin = true
+		if u.Role == 0 {
+			this.IsAdmin = true
+		}
 		this.Data["User"] = this.User
 	}
 	this.Data["islogin"] = this.IsLogin
+	this.Data["isadmin"] = this.IsAdmin
 }
 
 
 func (this *BaseController) Abort500(err error) {
 	this.Data["error"] = err
 	this.Abort("500")
+}
+
+func (this *BaseController) Abort401(err error){
+	this.Data["error"] = err
+	this.Abort("401")
 }
 
 

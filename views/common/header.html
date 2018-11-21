@@ -35,7 +35,9 @@
                 <dl class="layui-nav-child">
                     {{if .islogin}}
                     <dd><a href="/user">个人资料</a></dd>
+                    {{if .isadmin}}
                         <dd><a href="/create">创建文章</a></dd>
+                    {{end}}
                     <dd><a href="/logout">退出</a></dd>
                     {{else}}
                     <dd><a href="/user">登录</a></dd>

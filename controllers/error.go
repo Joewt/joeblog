@@ -46,6 +46,30 @@ func (c *ErrorController) Error500() {
 	}
 }
 
+func (c *ErrorController) Error401() {
+	c.TplName = "error/401.html"
+	err, ok := c.Data["error"].(error)
+
+	if !ok {
+		err = syserror.New("未知错误", nil)
+	}
+
+	serr, ok := err.(syserror.Error)
+	if !ok {
+		serr = syserror.New(err.Error(), nil)
+	}
+
+	if serr.ReasonError() != nil {
+		logs.Info(serr.Error(),serr.ReasonError())
+	}
+
+	if c.IsAjax() {
+		c.jsonerror(serr)
+	} else {
+		c.Data["content"] = serr.Error()
+	}
+}
+
 func (c *ErrorController) ErrorDb() {
 	c.Data["content"] = "database is now down"
 	c.TplName = "dberror.tpl"

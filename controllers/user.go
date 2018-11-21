@@ -25,7 +25,6 @@ func (this *UserController) Login() {
 	}
 
 	user, _ := models.QueryUserById(id)
-	logs.Info("用户信息",user)
 	if err != nil {
 		logs.Warn(err)
 	}
@@ -34,9 +33,7 @@ func (this *UserController) Login() {
 
 	this.JsonOK("登录成功","/")
 
-	logs.Info("登录成功 用户id：", user)
-
-
+	logs.Info("登录成功 用户id：", user.Id)
 }
 
 // @router /logout [get]

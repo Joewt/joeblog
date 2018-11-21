@@ -1,5 +1,9 @@
 package controllers
 
+import (
+	"github.com/yinrenxin/joeblog/syserror"
+)
+
 type IndexController struct {
 	BaseController
 }
@@ -35,4 +39,12 @@ func (this *IndexController) IndexUser() {
 // @router /reg [get]
 func (this *IndexController) IndexReg() {
 	this.TplName = "reg.html"
+}
+
+// @router /create [get]
+func (this *IndexController) IndexCreate() {
+	if this.IsAdmin == false {
+		this.Abort401(syserror.New("权限不足",nil))
+	}
+	this.TplName = "editor.html"
 }
