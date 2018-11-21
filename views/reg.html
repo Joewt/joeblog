@@ -69,10 +69,16 @@
                         }, 300)
                     }
                 }else{
-                    layer.msg("注册失败-"+data.msg)
+                    layer.msg('注册失败'+data.msg, {
+                        offset: 't',
+                        anim: 6
+                        });
                 }
             }, "json").error(function() {
-                layer.msg("网络异常")
+                layer.msg('网络异常'+data.msg, {
+                        offset: 't',
+                        anim: 6
+                        });
             });
 
             return false
