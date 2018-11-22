@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/yinrenxin/joeblog/syserror"
 	"github.com/astaxie/beego/logs"
+	"github.com/satori/go.uuid"
 )
 
 const SESSION_USER_KEY = "SESSION_USER_KEY"
@@ -21,7 +22,7 @@ type BaseController struct {
 func (this *BaseController) Prepare() {
 	this.Data["Path"] = this.Ctx.Request.RequestURI
 	u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
-	logs.Info("是否登录",u)
+	logs.Info("登录id：",u.Id, "登录邮箱：",u.Email)
 	this.IsLogin = false
 	this.IsAdmin = false
 	if ok {
@@ -76,4 +77,12 @@ func (this *BaseController) JsonOKH(msg string, data MAP_H) {
 	data["msg"] = msg
 	this.Data["json"] = data
 	this.ServeJSON()
+}
+
+func (this *BaseController) UUID() string {
+	u, err := uuid.NewV4()
+	if err != nil {
+		this.Abort500(syserror.New("系统错误", nil))
+	}
+	return u.String()
 }

@@ -43,19 +43,20 @@
 		</div>
 {{template "common/footer.html" .}}
 <script type="text/javascript" src="/static/js/wangEditor.js"></script>
-<script type="text/javascript">
-    var E = window.wangEditor
-    var editor = new E('#editor')
-    // 或者 var editor = new E( document.getElementById('editor') )
-    editor.create()
-</script>
 
 <script>
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    editor.customConfig.uploadImgShowBase64 = true;
+    editor.customConfig.pasteFilterStyle = false;
+    editor.customConfig.zIndex = 2;
+    editor.create();
     layui.use(['form','jquery'], function() {
         var form  = layui.form;
         $=layui.jquery;
         form.on('submit(save)', function(rdata){
-            $.post("/create",rdata.field, function(data){
+            rdata.field.content = editor.txt.html();
+            $.post("/create/{{.key}}",rdata.field, function(data){
                 if(data.code == 0){
                     layer.msg("添加文章成功");
                     if(data.action){

@@ -17,12 +17,16 @@ type User struct {
 
 type Article struct {
 	Id uint
+	Key string
 	User_id uint
 	Title string
+	Summary string
 	Content string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	Praise int     `orm:"default(0)"`
+	Discuss int    `orm:"default(0)"`
+	CreatedAt time.Time `orm:"auto_now_add;type(date)"`
+	UpdatedAt time.Time `orm:"auto_now_add;type(date)"`
+	DeletedAt time.Time `orm:"auto_now_add;type(date)"`
 }
 
 type Comment struct {

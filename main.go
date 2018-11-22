@@ -22,6 +22,9 @@ func initTemplate() {
 		y1 := strings.Trim(y, "/")
 		return strings.Compare(x1, y1) == 0
 	})
+	beego.AddFuncMap("add", func(a, b int64)(int64){
+		return a + b
+	})
 }
 
 func initSession() {

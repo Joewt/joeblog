@@ -10,8 +10,17 @@ func init() {
     beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:ArticleController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:ArticleController"],
         beego.ControllerComments{
             Method: "Create",
-            Router: `/create`,
+            Router: `/create/:key`,
             AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:ArticleController"] = append(beego.GlobalControllerRouter["github.com/yinrenxin/joeblog/controllers:ArticleController"],
+        beego.ControllerComments{
+            Method: "Details",
+            Router: `/detail/:k`,
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})
