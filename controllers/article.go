@@ -5,6 +5,8 @@ import (
 	"github.com/yinrenxin/joeblog/models"
 	"github.com/yinrenxin/joeblog/syserror"
 	"github.com/PuerkitoBio/goquery"
+	_"github.com/astaxie/beego/logs"
+	"strconv"
 )
 
 
@@ -53,8 +55,46 @@ func getSummary(h string)(string, error){
 
 // @router /detail/:k [get]
 func (this *ArticleController) Details() {
-
-
+	k := this.Ctx.Input.Param(":k")
+	temp, _  := strconv.Atoi(k)
+	id := uint(temp)
+	art, _ := models.GetArtById(id)
+	user, _ := models.QueryUserById(art.User_id)
+	//u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
+	this.Data["art"] = art
+	this.Data["user"] = user
 	this.TplName = "details.html"
+}
+
+// @router /del [post]
+func (this *ArticleController) Del() {
+	k := this.GetMushString("key","参数错误")
+	u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
+	if !ok {
+		this.Abort500(syserror.New("未登陆",nil))
+	}
+	temp,err := strconv.Atoi(k)
+	if err != nil {
+		this.Abort500(syserror.New("系统错误",nil))
+	}
+	art_id := uint(temp)
+	art, err := models.GetArtById(art_id)
+	if err != nil {
+		this.Abort500(syserror.New("系统错误",nil))
+	}
+	if art.User_id != u.Id {
+		this.Abort500(syserror.New("没有权限",nil))
+	}
+	err = models.DelArtById(art_id)
+
+	if err != nil {
+		this.Abort500(syserror.NoArt())
+	}
+	this.JsonOK("删除文章成功","/")
+}
+
+// @router /editor [post]
+func (this *ArticleController) Editor() {
+	this.Abort500(syserror.New("编辑失败",nil))
 }
 

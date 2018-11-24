@@ -4,8 +4,8 @@
 	<meta charset="UTF-8">
 	<title>评论-闲言轻博客</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../res/layui/css/layui.css">
-	<link rel="stylesheet" href="../res/static/css/mian.css">
+	<link rel="stylesheet" href="/static/layui/css/layui.css">
+	<link rel="stylesheet" href="/static/css/mian.css">
 </head>
 <body class="lay-blog">
 		{{template "common/header.html" .}}
@@ -14,16 +14,27 @@
 					<div class="contar-wrap">
 						<div class="item">
 							<div class="item-box  layer-photos-demo1 layer-photos-demo">
-								<h3><a href="details.html">拥有诗意的心态,才能拥有诗意的生活</a></h3>
-								<h5>发布于：<span>刚刚</span></h5>
-								<p>父爱如山，不善表达。回想十多年前，总记得父亲有个宽厚的肩膀，小小的自己跨坐在上面，越过人山人海去看更广阔的天空，那个时候期望自己有一双翅膀，能够像鸟儿一样飞得高，看得远。虽然父亲有时会和自己开玩笑，但在做错事的时候会受到严厉的训斥。父亲有双粗糙的大手掌，手把手教我走路、骑车，却会在该放手的时刻果断地放开让自己去大胆尝试，那个时候期望快快长大，能够做自己想做的事，不用受父亲的“控制”。父亲是智慧树，他无所不知、无所不晓，虽然你有十万个为什么，但是也难不倒他。</p>
-								<img src="../res/static/images/item.png" alt="">
+								<h3><a href="/detail/{{.art.Id}}">{{.art.Title}}</a></h3>
+								<h5>发布于：<span>{{date .art.CreatedAt "Y-m-d H:i:s"}}</span></h5>
+								{{if .isadmin}}
+								
+								{{end}}
+								<p>{{str2html .art.Content}}</p>
+								<img src="/static/images/item.png" alt="">
 								<div class="count layui-clear">
 									<span class="pull-left">阅读 <em>100000+</em></span>
-									<span class="pull-right like"><i class="layui-icon layui-icon-praise"></i><em>999</em></span>
+									<span class="pull-right like" onclick="clickStar();"><i class="layui-icon layui-icon-praise"></i><em id="articleStart">{{.art.Praise}}</em></span>
 								</div>
 							</div>
-						</div>	
+							<form class="layui-form" action="" style="padding-bottom:10px;padding-left:10px;">
+									<input style="visibility:hidden" type="text" name="key" value="{{.art.Id}}">
+									<div>
+									<button class="layui-btn layui-btn-xs" lay-submit=""  lay-filter="editor">编辑</button>
+									<button class="layui-btn layui-btn-xs" lay-submit=""  lay-filter="del">删除</button>
+									</div>
+									<form>
+						</div>
+						
 						<a name="comment"> </a>
 						<div class="comt layui-clear">
 							<a href="javascript:;" class="pull-left">评论</a>
@@ -31,7 +42,7 @@
 						</div>
 						<div id="LAY-msg-box">
 							<div class="info-item">
-								<img class="info-img" src="../res/static/images/info-img.png" alt="">
+								<img class="info-img" src="/static/images/info-img.png" alt="">
 								<div class="info-text">
 									<p class="title count">
 										<span class="name">一片空白</span>
@@ -41,7 +52,7 @@
 								</div>
 							</div>	
 							<div class="info-item">
-								<img class="info-img" src="../res/static/images/info-img.png" alt="">
+								<img class="info-img" src="/static/images/info-img.png" alt="">
 								<div class="info-text">
 									<p class="title count">
 										<span class="name">一片空白</span>
@@ -56,4 +67,72 @@
 		</div>
 	{{template "common/footer.html" .}}
 </body>
+<script>
+var f = true
+function clickStar() {
+	if(f){
+	document.getElementById('articleStart').innerHTML = parseInt(document.getElementById('articleStart').innerHTML)+1;
+	f = false;
+	}else{
+		return;
+	}
+}
+
+
+layui.use(['form','jquery'], function() {
+        var form  = layui.form;
+        $=layui.jquery;
+        form.on('submit(del)', function(rdata){
+            $.post("/del",rdata.field, function(data){
+                if(data.code == 0){
+                    layer.msg("删除成功");
+                    if(data.action){
+                        setTimeout(function() {
+                            window.location.href = data.action;
+                        }, 300)
+                    }
+                }else{
+                    
+                    layer.msg('删除失败'+data.msg, {
+                        offset: 't',
+                        anim: 6
+                        });
+                }
+            }, "json").error(function() {
+                layer.msg('网络异常', {
+                    offset: 't',
+                    anim: 6
+                    });
+            });
+
+            return false
+        })
+		form.on('submit(editor)', function(rdata){
+            $.post("/editor",rdata.field, function(data){
+                if(data.code == 0){
+                    layer.msg("删除成功");
+                    if(data.action){
+                        setTimeout(function() {
+                            window.location.href = data.action;
+                        }, 300)
+                    }
+                }else{
+                    
+                    layer.msg('删除失败'+data.msg, {
+                        offset: 't',
+                        anim: 6
+                        });
+                }
+            }, "json").error(function() {
+                layer.msg('网络异常', {
+                    offset: 't',
+                    anim: 6
+                    });
+            });
+
+            return false
+        })
+    })
+	
+</script>>
 </html>

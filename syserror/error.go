@@ -12,3 +12,8 @@ type Error interface {
 func New(msg string, reason error) Error {
 	return UnKnowError{msg: msg, reason: reason}
 }
+
+
+func NoArt() Error {
+	return NoArtError{}
+}

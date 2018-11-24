@@ -5,7 +5,7 @@ import (
 	"github.com/yinrenxin/joeblog/models"
 	"errors"
 	"github.com/yinrenxin/joeblog/syserror"
-	"github.com/astaxie/beego/logs"
+	_ "github.com/astaxie/beego/logs"
 	"github.com/satori/go.uuid"
 )
 
@@ -22,7 +22,7 @@ type BaseController struct {
 func (this *BaseController) Prepare() {
 	this.Data["Path"] = this.Ctx.Request.RequestURI
 	u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
-	logs.Info("登录id：",u.Id, "登录邮箱：",u.Email)
+	//logs.Info("登录id：",u.Id, "登录邮箱：",u.Email)
 	this.IsLogin = false
 	this.IsAdmin = false
 	if ok {
