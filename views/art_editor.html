@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>发表文章</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{{template "common/link.html"}}
+</head>
+<body class="lay-blog">
+{{template "common/header.html" .}}
+
+		<div class="container-wrap">
+			<div class="container">
+
+					<div class="contar-wrap">
+						<div class = "item">
+                        
+							<div class="item-box layer-photos-demol layer-photos-demo">
+                                <form class="layui-form layui-form-pane" action="">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">文章标题</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" autocomplete="off" placeholder="请输入文章标题" class="layui-input" value="{{.art.Title}}">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="layui-form-item layui-form-text">
+                                        <label class="layui-form-label">文章内容</label>
+                                        <div id="editor">
+                                            <p>{{str2html .art.Content}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <button class="layui-btn" lay-submit="" lay-filter="save">更新</button>
+                                    </div>
+                                </form>
+							</div>
+                            
+                        </div>
+					</div>
+			</div>
+		</div>
+{{template "common/footer.html" .}}
+<script type="text/javascript" src="/static/js/wangEditor.js"></script>
+
+<script>
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    editor.customConfig.uploadImgShowBase64 = true;
+    editor.customConfig.pasteFilterStyle = false;
+    editor.customConfig.zIndex = 2;
+    editor.create();
+    layui.use(['form','jquery'], function() {
+        var form  = layui.form;
+        $=layui.jquery;
+        form.on('submit(save)', function(rdata){
+            rdata.field.content = editor.txt.html();
+            $.post("/create/{{.art.Key}}",rdata.field, function(data){
+                if(data.code == 0){
+                    layer.msg("更新文章成功");
+                    if(data.action){
+                        setTimeout(function() {
+                            
+var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+parent.layer.close(index); //再执行关闭 
+                        }, 300)
+                    }
+                }else{
+                    layer.msg("更新文章失败-"+data.msg)
+                }
+            }, "json").error(function() {
+                layer.msg("网络异常")
+            });
+
+            return false;
+        })
+    })
+</script>
+
+</body>
+</html>

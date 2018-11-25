@@ -34,7 +34,7 @@ type Comment struct {
 	Article_id uint
 	User_id uint
 	Content string
-	CreatedAt time.Time
+	CreatedAt time.Time `orm:"auto_now_add;type(date)"`
 }
 
 

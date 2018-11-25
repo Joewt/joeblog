@@ -2,11 +2,11 @@ package controllers
 
 import (
 	"bytes"
+	"github.com/yinrenxin/joeblog/common"
 	"github.com/yinrenxin/joeblog/models"
 	"github.com/yinrenxin/joeblog/syserror"
 	"github.com/PuerkitoBio/goquery"
 	_"github.com/astaxie/beego/logs"
-	"strconv"
 )
 
 
@@ -56,8 +56,7 @@ func getSummary(h string)(string, error){
 // @router /detail/:k [get]
 func (this *ArticleController) Details() {
 	k := this.Ctx.Input.Param(":k")
-	temp, _  := strconv.Atoi(k)
-	id := uint(temp)
+	id := common.StrToUint(k)
 	art, _ := models.GetArtById(id)
 	user, _ := models.QueryUserById(art.User_id)
 	//u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
@@ -73,11 +72,7 @@ func (this *ArticleController) Del() {
 	if !ok {
 		this.Abort500(syserror.New("未登陆",nil))
 	}
-	temp,err := strconv.Atoi(k)
-	if err != nil {
-		this.Abort500(syserror.New("系统错误",nil))
-	}
-	art_id := uint(temp)
+	art_id := common.StrToUint(k)
 	art, err := models.GetArtById(art_id)
 	if err != nil {
 		this.Abort500(syserror.New("系统错误",nil))
@@ -93,8 +88,18 @@ func (this *ArticleController) Del() {
 	this.JsonOK("删除文章成功","/")
 }
 
-// @router /editor [post]
+// @router /editor/:k [get]
 func (this *ArticleController) Editor() {
-	this.Abort500(syserror.New("编辑失败",nil))
+	k := this.Ctx.Input.Param(":k")
+	u, ok := this.GetSession(SESSION_USER_KEY).(models.User)
+	if !ok{
+		this.Abort500(syserror.New("未登陆",nil))
+	}
+	id := common.StrToUint(k)
+	art, _ := models.GetArtById(id)
+	if u.Id != art.User_id {
+		this.Abort500(syserror.New("没有该文章的编辑权限",nil))
+	}
+	this.Data["art"] = art
+	this.TplName = "art_editor.html"
 }
-

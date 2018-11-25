@@ -16,23 +16,26 @@
 							<div class="item-box  layer-photos-demo1 layer-photos-demo">
 								<h3><a href="/detail/{{.art.Id}}">{{.art.Title}}</a></h3>
 								<h5>发布于：<span>{{date .art.CreatedAt "Y-m-d H:i:s"}}</span></h5>
-								{{if .isadmin}}
 								
-								{{end}}
+							
 								<p>{{str2html .art.Content}}</p>
-								<img src="/static/images/item.png" alt="">
 								<div class="count layui-clear">
 									<span class="pull-left">阅读 <em>100000+</em></span>
 									<span class="pull-right like" onclick="clickStar();"><i class="layui-icon layui-icon-praise"></i><em id="articleStart">{{.art.Praise}}</em></span>
 								</div>
-							</div>
+
+
+								{{if .isadmin}}
+
 							<form class="layui-form" action="" style="padding-bottom:10px;padding-left:10px;">
 									<input style="visibility:hidden" type="text" name="key" value="{{.art.Id}}">
 									<div>
-									<button class="layui-btn layui-btn-xs" lay-submit=""  lay-filter="editor">编辑</button>
+											<button class="layui-btn layui-btn-xs" lay-submit="" lay-filter="editor">编辑</button>
 									<button class="layui-btn layui-btn-xs" lay-submit=""  lay-filter="del">删除</button>
-									</div>
-									<form>
+							</div>
+							<form>
+							{{end}}
+							</div>
 						</div>
 						
 						<a name="comment"> </a>
@@ -79,10 +82,13 @@ function clickStar() {
 }
 
 
+
+
 layui.use(['form','jquery'], function() {
         var form  = layui.form;
         $=layui.jquery;
         form.on('submit(del)', function(rdata){
+			
             $.post("/del",rdata.field, function(data){
                 if(data.code == 0){
                     layer.msg("删除成功");
@@ -105,34 +111,31 @@ layui.use(['form','jquery'], function() {
                     });
             });
 
-            return false
-        })
-		form.on('submit(editor)', function(rdata){
-            $.post("/editor",rdata.field, function(data){
-                if(data.code == 0){
-                    layer.msg("删除成功");
-                    if(data.action){
-                        setTimeout(function() {
-                            window.location.href = data.action;
-                        }, 300)
-                    }
-                }else{
-                    
-                    layer.msg('删除失败'+data.msg, {
-                        offset: 't',
-                        anim: 6
-                        });
-                }
-            }, "json").error(function() {
-                layer.msg('网络异常', {
-                    offset: 't',
-                    anim: 6
-                    });
-            });
+            return false;
 
-            return false
+			
         })
+
+		form.on('submit(editor)', function(rdata){
+           
+                var layer = layui.layer;	
+				layer.open({
+					type: 2,
+					area: ['700px', '450px'],
+					fixed: false, //不固定
+					maxmin: true,
+					content: '/editor/{{.art.Id}}'
+				});
+			
+
+            return false;
+
+			
+        })
+
+
+
     })
 	
-</script>>
+</script>
 </html>
